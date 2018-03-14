@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/vue.min .js"></script>
+		<script src="js/vue-router.js"></script>
+	</head>
+
+	<body>
+		<div id="app">
+			<p>{{ message }}</p>
+			<input type="text" v-model="message">
+			<child :msg="message"></child>
+		</div>
+		<template id="child">
+			<p>从父组件传来的msg: {{ msg }}</p>
+		</template>
+
+		</div>
+
+	</body>
+	<script>
+		//定义注册
+		Vue.component('child', {
+			template: '#child',
+			props: ['msg']
+		})
+		var model={
+			message:""
+		}
+		new Vue({
+			el: '#app',
+			data:model
+		})
+	</script>
+
+</html>

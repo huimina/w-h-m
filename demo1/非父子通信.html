@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/vue.js"></script>
+	</head>
+	<body>
+		
+		<div id="appvm1">
+			<command1></command1>
+		</div>
+		<div id="appvm2">
+			<command2></command2>
+		</div>
+		<script>
+			var bus = new Vue();
+			var vml = new Vue({
+				el:"#appvm1",
+				data:{
+					
+				},
+				methods:{
+					
+				},
+				components:{
+					"command1":{
+						template:`
+						<div id="div1" v-on:click="add">
+							<button>点击我，触发自定义事件，进行数据的传递</button>
+							<div>当前的数据是：{{num}}</div>
+						</div>
+						`,
+						data(){
+							return {
+								num:0
+							}
+						},
+						methods:{
+							add(){
+								this.num++;
+								bus.$emit("test",this.num)
+							}
+						}
+					}
+				}
+			});
+			var vm2 = new Vue({
+				el:"#appvm2",
+				components:{
+					"command2":{
+						template:`
+							<div id="div2" v-on:click="result">
+							<button>点击我，进行自定义事件的注册</button>
+							<div>传递过来的数据是{{getData}}</div>
+							</div>
+						`,
+						data(){
+							return{
+								getData:0
+							}
+						},
+						methods:{
+							result(){   
+								var that = this;
+							    bus.$on("test",function(num){
+							    	that.getData = num;
+							    	//解绑
+							    	bus.$off("test");
+							    })
+							}
+						}
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

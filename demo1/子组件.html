@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		
+		<script src="js/vue.min .js" type="text/javascript" charset="utf-8"></script>
+		<script src="vue/vue-router.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+
+		<!--父组件-->
+		<div id="app"> 
+			{{msg}}
+		<!--子组件-->
+		   <button-router @test="incrementTotal" :msg="msg"></button-router>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	Vue.component('buttonRouter',{
+		template:'<button @click="increment">点击触发</button>',
+		methods:{
+			increment:function(){
+			
+				this.$emit('test',"王慧敏")
+			}
+		}
+	})
+	
+
+	var dataModel={
+		msg:""
+	}
+
+	var vm=new Vue({
+		el:"#app",
+		data:dataModel,
+		methods:{
+			incrementTotal:function(msg){
+				this.msg=msg
+			}
+		}
+	})
+	
+</script>
